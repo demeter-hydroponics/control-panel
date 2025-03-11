@@ -56,7 +56,6 @@
       console.log('API Data:', JSON.stringify(data, null, 2));
       apiDataStore.set(data); // Update the store
 
-
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -65,6 +64,7 @@
   // Load data when the component mounts
   onMount(() => {
     fetchData();
+    fetchConnected();
   });
   
   // Function to manually refresh data (for the button click)
@@ -76,7 +76,6 @@
   function refreshConnected() {
     fetchConnected();
   }
-
 
 </script>
 

@@ -2,7 +2,7 @@
     import { apiDataStore, connectedStore } from '$lib/stores';
     import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
     import { RangeSlider } from '@skeletonlabs/skeleton';
-  import { CircleX, CircleCheck } from 'lucide-svelte';
+    import { CircleX, CircleCheck } from 'lucide-svelte';
 
 
     const PumpStateOptions = [
@@ -23,7 +23,7 @@
   <section class="w-full p-8 bg-white">
     <h2 class="text-2xl font-bold mb-4 text-black">Main Content</h2>
     <div class="flex overflow-x-auto gap-4 pb-4">
-    {#if $apiDataStore && $apiDataStore.Columns}
+    {#if $apiDataStore && $apiDataStore.Columns && $connectedStore}
       {#each $apiDataStore.Columns as column}
       <div class="flex flex-col w-1/3 mx-auto ">
         <div class="bg-blue-100 rounded-lg shadow p-5 text-black">
