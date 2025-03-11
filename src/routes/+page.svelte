@@ -21,14 +21,14 @@
 <div class="flex w-full min-h-screen">
   <!-- Main content section (3/4 of the screen) -->
   <section class="w-full p-8 bg-white">
-    <h2 class="text-2xl font-bold mb-4 text-black">Main Content</h2>
+    <h2 class="text-2xl font-bold mb-4 text-black">Farm Configs</h2>
     <div class="flex overflow-x-auto gap-4 pb-4">
     {#if $apiDataStore && $apiDataStore.Columns && $connectedStore}
       {#each $apiDataStore.Columns as column}
       <div class="flex flex-col w-1/3 mx-auto ">
         <div class="bg-blue-100 rounded-lg shadow p-5 text-black">
             <div class="flex items-center justify-between w-full">
-                <h2 class="text-black">Column: {$apiDataStore.Controllers[column.Id].Name} </h2>
+                <h2 class="text-black">Name: {$apiDataStore.Controllers[column.Id].Name} </h2>
                 {#if $connectedStore && $connectedStore.includes(column.Id)}
                     <div class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center" title="Connected">
                         <CircleCheck />
@@ -39,7 +39,7 @@
                     </div>
                 {/if}
             </div>
-            <h2 class="text-black">Id: {column.Id} </h2>
+            <!-- <h2 class="text-black">Id: {column.Id} </h2> -->
 
             <div class="flex items-center justify-between w-full">
                 <h2 class="text-black">Primary Pump State:  </h2>
@@ -63,7 +63,7 @@
             </div>
 
             <div class="flex items-center justify-between w-full">
-                <h2 class="text-black">Mixing Valve State:  </h2>
+                <h2 class="text-black">Nutrient Mixing Valve State:  </h2>
                 <RadioGroup>
                     {#each MixingStateOptions as option}
                         <RadioItem bind:group={column.MixingState} value={option.value} name="basic-radio">
@@ -74,7 +74,7 @@
             </div>
 
             <div class="flex items-center justify-between w-full">
-                <h2 class="text-black">Water Level State:  </h2>
+                <h2 class="text-black">Fresh Water Valve State:  </h2>
                 <RadioGroup>
                     {#each MixingStateOptions as option}
                         <RadioItem bind:group={column.WaterLevelState} value={option.value} name="basic-radio">
@@ -89,7 +89,7 @@
             {#each column.Nodes as node}
                 <div class="w-3/4 bg-green-100 p-5 m-5 rounded border text-black">
                     <div class="flex items-center justify-between w-full">
-                        <h2 class="text-black">Node: {$apiDataStore.Controllers[node.Id].Name} </h2>
+                        <h2 class="text-black">Name: {$apiDataStore.Controllers[node.Id].Name} </h2>
                         {#if $connectedStore && $connectedStore.includes(node.Id)}
                             <div class="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center" title="Connected">
                                 <CircleCheck />
@@ -100,14 +100,13 @@
                             </div>
                         {/if}
                     </div>
-                    <h2 class="text-black">Id: {node.Id} </h2>
-                    <RangeSlider name="range-slider" bind:value={node.PPFD} max={100} step={10} ticked>
+                    <!-- <h2 class="text-black">Id: {node.Id} </h2> -->
+                    <RangeSlider name="range-slider" bind:value={node.PPFD} max={300} step={20} ticked>
 	                    <div class="flex justify-between items-center text-black">
-		                    <div class="font-bold">PPFD:</div>
-		                    <div class="text-xs">{node.PPFD} / 100</div>
+		                    <div class="font-bold">Light Level (PPFD):</div>
+		                    <div class="text-xs">{node.PPFD} / 300</div>
 	                    </div>
                     </RangeSlider>
-
                 </div>
             {/each}
 
@@ -120,6 +119,6 @@
       {/if}
     </div>
 
-    <pre class="text-2xl font-bold mb-4 text-black" >{JSON.stringify($apiDataStore, null, 2)}</pre> 
+    <!-- <pre class="text-2xl font-bold mb-4 text-black" >{JSON.stringify($apiDataStore, null, 2)}</pre>  -->
   </section>
 </div>

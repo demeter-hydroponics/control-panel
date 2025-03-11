@@ -10,7 +10,7 @@
 
     async function sendDataToServer() {
     try {
-      const response = await fetch('http://localhost:12345/config', {
+      const response = await fetch('http://192.168.1.51:12345/config', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -31,7 +31,7 @@
 
   async function fetchConnected() {
     try {
-      const response = await fetch('http://localhost:12345/connected');
+      const response = await fetch('http://192.168.1.51:12345/connected');
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
