@@ -3,9 +3,9 @@
 	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
     import { RotateCw, ArrowRight, Trash2 } from 'lucide-svelte';
 
-    import { onMount } from 'svelte';
+    import { onMount, onDestroy} from 'svelte';
 
-    import { apiDataStore, connectedStore } from '$lib/stores';
+    import { apiDataStore, connectedStore, levelsStore } from '$lib/stores';
 
 
     async function sendDataToServer() {
@@ -22,7 +22,7 @@
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       
-      alert('Data sent successfully!');
+      //alert('Data sent successfully!');
     } catch (error) {
       console.error('Error sending data:', error);
       alert(`Failed to send data: ${error.message}`);
@@ -31,7 +31,7 @@
 
   async function fetchConnected() {
     try {
-      const response = await fetch('http://192.168.1.51:12345/connected');
+      const response = await fetch('http://localhost:12345/connected');
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -61,21 +61,49 @@
     }
   }
 
-  // Load data when the component mounts
-  onMount(() => {
-    fetchData();
-    fetchConnected();
-  });
-  
+  async function fetchLevelsData() {
+    try {
+      const response = await fetch('http://localhost:12345/tanklevels');
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      //console.log('data recieved!');
+      console.log('API Data:', JSON.stringify(data, null, 2));
+      levelsStore.set(data); // Update the store
+
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+
   // Function to manually refresh data (for the button click)
   function refreshData() {
     fetchData();
     fetchConnected();
+    fetchLevelsData();
   }
 
   function refreshConnected() {
     fetchConnected();
+    fetchLevelsData();
   }
+
+  let intervalId;
+
+  // Load data when the component mounts
+  onMount(() => {
+    fetchData();
+    fetchConnected();
+    fetchLevelsData();
+
+    intervalId = setInterval(refreshConnected, 5000);
+  });
+
+  onDestroy(() => {
+    if (intervalId) clearInterval(intervalId);
+  });
+  
 
 </script>
 

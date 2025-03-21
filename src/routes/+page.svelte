@@ -1,5 +1,5 @@
 <script>
-    import { apiDataStore, connectedStore } from '$lib/stores';
+    import { apiDataStore, connectedStore, levelsStore } from '$lib/stores';
     import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
     import { RangeSlider } from '@skeletonlabs/skeleton';
     import { CircleX, CircleCheck } from 'lucide-svelte';
@@ -23,7 +23,7 @@
   <section class="w-full p-8 bg-white">
     <h2 class="text-2xl font-bold mb-4 text-black">Farm Configs</h2>
     <div class="flex overflow-x-auto gap-4 pb-4">
-    {#if $apiDataStore && $apiDataStore.Columns && $connectedStore}
+    {#if $apiDataStore && $apiDataStore.Columns && $connectedStore && $levelsStore}
       {#each $apiDataStore.Columns as column}
       <div class="flex flex-col w-1/3 mx-auto ">
         <div class="bg-blue-100 rounded-lg shadow p-5 text-black">
@@ -39,6 +39,18 @@
                     </div>
                 {/if}
             </div>
+
+            <!-- h2 class="text-black">Mixing Tank Height:    {$levelsStore.mixing[column.Id] ?? -1} m </h2 -->
+            <!-- h2 class="text-black">Solution Tank Height:    {$levelsStore.solution[column.Id] ?? -1} m </h2 -->
+
+            <h2 class="text-black">
+                <span class="inline-block w-48">Mixing Tank Height:</span>
+                {$levelsStore.mixing[column.Id] ?? -1} m
+            </h2>
+            <h2 class="text-black">
+                <span class="inline-block w-48">Solution Tank Height:</span>
+                {$levelsStore.solution[column.Id] ?? -1} m
+            </h2>
             <!-- <h2 class="text-black">Id: {column.Id} </h2> -->
 
             <div class="flex items-center justify-between w-full">
